@@ -1,35 +1,38 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  let [AllData, setAllData] = useState([])
 
   useEffect(function () {
     getDataFromApi()
   }, [])
 
   function getDataFromApi() {
-    fetch('https://newsapi.org/v2/everything?q=tesla&from=2023-12-19&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b')
+    fetch('https://newsapi.org/v2/everything?q=tesla&from=2023-12-30&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b')
       .then((data) => data.json())
-      .then((data) => {
-        console.log(data.articles[0]);
-        data.articles.map((news) => {
-          console.log(news.title);
-        })
+      .then((data) => setAllData(data.articles))
 
-      })
+  }
+  console.log(AllData);
+  if (!AllData.length) {
+    return <h1>loading...</h1>
   }
   return (
     <div className="App">
-
-      <div className="card">
-        <img src="" alt="" />
-        <div className="card-body">
-          <h5 className="card-title">Tittle</h5>
-          <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" className="btn btn-primary">Go somewhere</a>
-        </div>
+      <div className="CardDiv row">
+        {AllData.map((AllNews, index) => (
+          <div className="card col-sm-6 col-md-4 col-lg-3" key={index}>
+            <img src={AllNews.urlToImage} alt={AllNews.title} />
+            <div className="card-body ">
+              <h5 className="card-title">{AllNews.title}</h5>
+              <p className="card-text">{AllNews.description}</p>
+              <a href={AllNews.url} className="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        ))}
       </div>
-
     </div>
   );
 }
