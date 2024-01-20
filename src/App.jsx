@@ -23,11 +23,11 @@ function App() {
     <div className="App">
       <div className="CardDiv row">
         {AllData.map((AllNews, index) => (
-          <div className="card col-sm-6 col-md-4 col-lg-3" key={index}>
-            <img src={AllNews.urlToImage} alt={AllNews.title} />
+          <div className="card col-12 col-sm-6 col-md-4 col-lg-3" key={index}>
+            <img src={AllNews.urlToImage} className='Image' alt={AllNews.title} />
             <div className="card-body ">
               <h5 className="card-title">{AllNews.title}</h5>
-              <p className="card-text">{AllNews.description}</p>
+              <p className="card-text" id='description'>{AllNews.description}</p>
               <a href={AllNews.url} className="btn btn-primary">Read More</a>
             </div>
           </div>
