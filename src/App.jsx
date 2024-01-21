@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  let [AllData, setAllData] = useState([])
+  let [AllData, setAllData] = useState([]);
+  let [input, setinput] = useState("");
 
   useEffect(function () {
     getDataFromApi()
@@ -20,7 +21,19 @@ function App() {
     return <h1>loading...</h1>
   }
   return (
+
+
     <div className="App">
+
+      <div className='navDiv navbar-expand-lg'>
+        <div>
+          <h1 id='Logo'>NEWS</h1>
+        </div>
+        <div className='inpBtn'>
+          <input type="text" placeholder='Search' name="" id="input" />
+          <button id='searchbtn'>Search</button>
+        </div>
+      </div>
       <div className="CardDiv row">
         {AllData.map((AllNews, index) => (
           <div className="card col-12 col-sm-6 col-md-4 col-lg-3" key={index}>
