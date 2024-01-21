@@ -25,7 +25,7 @@ function App() {
 
     <div className="App">
 
-      <div className='navDiv navbar-expand-lg'>
+      <div className='navDiv sticky-top navbar-expand-lg'>
         <div>
           <h1 id='Logo'>NEWS</h1>
         </div>
