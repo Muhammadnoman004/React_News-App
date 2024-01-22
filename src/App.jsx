@@ -4,22 +4,31 @@ import { useEffect, useState } from 'react';
 function App() {
 
   let [AllData, setAllData] = useState([]);
-  let [input, setinput] = useState("");
+  let [inputValue, setinputValue] = useState("");
 
   useEffect(function () {
     getDataFromApi()
   }, [])
 
   function getDataFromApi() {
-    fetch('https://newsapi.org/v2/everything?q=tesla&from=2023-12-30&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b')
+    fetch(`https://newsapi.org/v2/everything?q=${inputValue}from=2023-12-30&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b`)
       .then((data) => data.json())
       .then((data) => setAllData(data.articles))
 
   }
+
   console.log(AllData);
   if (!AllData.length) {
     return <h1>loading...</h1>
   }
+
+  function SearchNewsbtn() {
+    console.log(inputValue);
+    getDataFromApi(inputValue)
+    setinputValue("")
+
+  }
+
   return (
 
 
@@ -30,8 +39,8 @@ function App() {
           <h1 id='Logo'>NEWS</h1>
         </div>
         <div className='inpBtn'>
-          <input type="text" placeholder='Search' name="" id="input" />
-          <button id='searchbtn'>Search</button>
+          <input type="text" value={inputValue} onChange={(e) => setinputValue(e.target.value)} placeholder='Search' name="" id="input" />
+          <button id='searchbtn' onClick={SearchNewsbtn}>Search</button>
         </div>
       </div>
       <div className="CardDiv row">
