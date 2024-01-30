@@ -1,5 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2'
 
 function App() {
 
@@ -10,23 +11,28 @@ function App() {
     getDataFromApi()
   }, [])
 
-  function getDataFromApi() {
-    fetch(`https://newsapi.org/v2/everything?q=${inputValue}from=2023-12-30&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b`)
+  function getDataFromApi(query) {
+    fetch(`https://newsapi.org/v2/everything?q=${query}&from=2023-12-30&sortBy=publishedAt&apiKey=a502c4892df7456e908c32e0a8ac631b`)
       .then((data) => data.json())
       .then((data) => setAllData(data.articles))
-
+      .catch((error) => console.log("Error fetching data:", error)); // Handle fetch errors
   }
 
-  console.log(AllData);
   if (!AllData.length) {
-    return <h1>loading...</h1>
+    return <img id='loader' src="https://i.stack.imgur.com/qq8AE.gif" alt="" />
   }
 
   function SearchNewsbtn() {
-    console.log(inputValue);
-    getDataFromApi(inputValue)
-    setinputValue("")
-
+    if (inputValue.trim() !== "") { // Check if input value is not empty
+      getDataFromApi(inputValue);
+      setinputValue("");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter a search term.",
+      });
+    }
   }
 
   return (
